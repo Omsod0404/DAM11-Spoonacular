@@ -2,7 +2,10 @@ import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, TextInput, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//To import the screens as components
+import { Welcome } from './screen';
 
+//For create a screens stack
 const Stack = createNativeStackNavigator();
 
 const colorPalette = {
@@ -14,11 +17,14 @@ const colorPalette = {
 
 export default function App() {
   return (
+    /* A navigator container is like a view where you can navigate throught screen */
     <NavigationContainer>
+      {/* Status bar of the app */}
+      <StatusBar barStyle={'light-content'} backgroundColor={colorPalette.green}/>
       <Stack.Navigator initialRouteName='Welcome'>
-        <Stack.Screen name='Welcome'/>
-        <Stack.Screen name='Search'/>
-        <Stack.Screen name='Recipe'/>
+        <Stack.Screen name='Welcome' component={Welcome} options={{headerShown: false}}/>
+        {/* <Stack.Screen name='Search'/>
+        <Stack.Screen name='Recipe'/> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
