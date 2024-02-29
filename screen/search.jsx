@@ -30,7 +30,6 @@ export default function Search ()
           console.log(e);
         }
 
-        setFilters(true) // if success then display based on this hook
     }
   , []);
 
@@ -46,6 +45,7 @@ export default function Search ()
         </View>
         <View>
           <Text>Search by Ingredient:</Text>
+          <Text>{ingredients}</Text>
         </View>
         <View>
           <Text>Search by Geographical Area:</Text>
