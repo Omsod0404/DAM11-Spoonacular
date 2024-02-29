@@ -34,5 +34,5 @@ yarn add @react-navigation/native-stack
 
 To use custom fonts
 ```
-npm expo install expo-font
+npm install expo-font
 ```
