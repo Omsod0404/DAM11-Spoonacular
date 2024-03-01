@@ -30,8 +30,8 @@ const WelcomeScreen = () => {
     return(
         <SafeAreaView style={welcomeScreenStyles.container}>
             {/* Logo */}
-            <Image source={require('../assets/icons/comer.png')} style={welcomeScreenStyles.logo}/>
-            <Text style={welcomeScreenStyles.title}>Dely-Meals</Text>
+            <Image source={require('../assets/icons/logo.png')} style={welcomeScreenStyles.logo}/>
+            <Text style={welcomeScreenStyles.title}>Deli-Meals</Text>
         </SafeAreaView>
     );
 };
@@ -47,12 +47,13 @@ const welcomeScreenStyles = StyleSheet.create({
     title:{
         fontFamily: 'Inter-ExtraBold',
         color: colorPalette.whitelight,
-        fontSize: 60,
+        fontSize: 40,
     },
     logo:{
-        width: 300,
-        height: 300,
-        resizeMode: 'contain'
+        width: 250,
+        height: 250,
+        resizeMode: 'contain',
+        marginBottom: 20,
     }
 });
 

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, TextInput, T
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //To import the screens as components
-import { Welcome } from './screen';
+import { Welcome } from './screens';
 
 //For create a screens stack
 const Stack = createNativeStackNavigator();
