@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, TextInput, T
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //To import the screens as components
-import { Search, Welcome } from './screens/index.jsx';
+import { Recipe, Results, Search, Welcome } from './screens/index.jsx';
 
 //For create a screens stack
 const Stack = createNativeStackNavigator();
@@ -21,10 +21,11 @@ export default function App() {
     <NavigationContainer>
       {/* Status bar of the app */}
       <StatusBar barStyle={'light-content'} backgroundColor={colorPalette.green}/>
-      <Stack.Navigator initialRouteName='Search'>
+      <Stack.Navigator initialRouteName='Results'>
         <Stack.Screen name='Welcome' component={Welcome} options={{headerShown: false}}/>
         <Stack.Screen name='Search' component={Search} options={{headerShown: false}}/>
-        {/*<Stack.Screen name='Recipe'/> */}
+        <Stack.Screen name='Recipe' component={Recipe} options={{headerShown: false}}/>
+        <Stack.Screen name='Results' component={Results} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

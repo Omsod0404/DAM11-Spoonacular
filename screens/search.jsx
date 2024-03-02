@@ -37,9 +37,11 @@ export default function Search ()
         let response_categories = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
         let data_categories = await response_categories.json();
         setCategories(data_categories);
+
       } catch (error) {
         setAreas(null);
         setCategories(null);
+
         console.log(error);
       }
 
@@ -55,7 +57,7 @@ export default function Search ()
   };
 
   return (
-  <View>  
+  <SafeAreaView>  
 
     <View style = {styles.bar}>
       <Image source={require('../assets/icons/logo.png')} style={styles.logo}/>
@@ -152,7 +154,7 @@ export default function Search ()
       </View>
 
     </View>
-  </View>  
+  </SafeAreaView>  
   );
 };
 
@@ -181,7 +183,7 @@ const styles = StyleSheet.create(
     {
       fontFamily: 'Inter-ExtraBold',
       color: colorPalette.whitelight,
-      fontSize: 20,
+      fontSize: 30,
     },
     logo:
     {
