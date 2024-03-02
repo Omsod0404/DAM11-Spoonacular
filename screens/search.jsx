@@ -145,9 +145,9 @@ export default function Search ()
 
       <View>
         <View style = {{width: '100%', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: '60%'}}>
-            <Image style={{height: 150, width: 150, alignSelf: 'center'}} source={require('../assets/icons/Baguette.gif')}/>
-            <Image style={{height: 150, width: 150, alignSelf: 'center'}} source={require('../assets/icons/Bread.gif')}/>
-            <Image style={{height: 150, width: 150, alignSelf: 'center'}} source={require('../assets/icons/Generique.gif')}/>
+            <Image style={{height: 100, width: 100, alignSelf: 'center'}} source={require('../assets/icons/Baguette.gif')}/>
+            <Image style={{height: 100, width: 100, alignSelf: 'center'}} source={require('../assets/icons/Bread.gif')}/>
+            <Image style={{height: 100, width: 100, alignSelf: 'center'}} source={require('../assets/icons/Generique.gif')}/>
         </View>
       </View>
 
