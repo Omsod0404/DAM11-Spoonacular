@@ -57,7 +57,7 @@ export default function Search ()
   };
 
   return (
-  <View>  
+  <SafeAreaView>  
 
     <View style = {styles.bar}>
       <Image source={require('../assets/icons/logo.png')} style={styles.logo}/>
@@ -154,7 +154,7 @@ export default function Search ()
       </View>
 
     </View>
-  </View>  
+  </SafeAreaView>  
   );
 };
 
@@ -183,7 +183,7 @@ const styles = StyleSheet.create(
     {
       fontFamily: 'Inter-ExtraBold',
       color: colorPalette.whitelight,
-      fontSize: 20,
+      fontSize: 30,
     },
     logo:
     {

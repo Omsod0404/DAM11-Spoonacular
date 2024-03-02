@@ -58,23 +58,27 @@ export default function Results() {
   };
 
   return (
-    <SafeAreaView style={SearchStyles.container}>
-      <View style={SearchStyles.recipes}>
+    <SafeAreaView style={ResultStyles.container}>
+      <View style = {ResultStyles.bar}>
+      <Image source={require('../assets/icons/logo.png')} style={ResultStyles.logo}/>
+      <Text style={ResultStyles.title}>Deli-Meals</Text>
+    </View>
+      <View style={ResultStyles.recipes}>
       {prueba && (
         <>
           <FlatList
-            style = {SearchStyles.recipesList}
+            style = {ResultStyles.recipesList}
             data={prueba.meals}
             keyExtractor={(item) => item.idMeal}
             renderItem={({ item }) => (
               <>
-                <View style = {SearchStyles.recipeContainer}>
-                  <Image source={{uri: item.strMealThumb}} style={SearchStyles.mealImage}/>
-                  <View style = {SearchStyles.recipeText}>
-                    <Text style = {SearchStyles.recipeTitle}>{item.strMeal}</Text>
-                    <TouchableOpacity style={SearchStyles.buttonRecipe} onPress={() => (navigateToRecipe(item.idMeal))}>
-                      <Text style={SearchStyles.buttonRecipeText}>See full recipe</Text>
-                      <Image source={require('../assets/icons/next.png')} style={SearchStyles.next}/>
+                <View style = {ResultStyles.recipeContainer}>
+                  <Image source={{uri: item.strMealThumb}} style={ResultStyles.mealImage}/>
+                  <View style = {ResultStyles.recipeText}>
+                    <Text style = {ResultStyles.recipeTitle}>{item.strMeal}</Text>
+                    <TouchableOpacity style={ResultStyles.buttonRecipe} onPress={() => (navigateToRecipe(item.idMeal))}>
+                      <Text style={ResultStyles.buttonRecipeText}>See full recipe</Text>
+                      <Image source={require('../assets/icons/next.png')} style={ResultStyles.next}/>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -89,7 +93,30 @@ export default function Results() {
   );
 }
 
-const SearchStyles = StyleSheet.create({
+const ResultStyles = StyleSheet.create({
+  bar: 
+  {
+    backgroundColor: colorPalette.green,
+    width: '100%',
+    height: '10%',
+    padding: 20,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title:
+  {
+    fontFamily: 'Inter-ExtraBold',
+    color: colorPalette.whitelight,
+    fontSize: 30,
+  },
+  logo:
+  {
+      height: 40,
+      width: 40,
+      marginRight: 10,
+  },
   container: {
     backgroundColor: colorPalette.whitelight,
     flex: 1,
@@ -162,7 +189,8 @@ const SearchStyles = StyleSheet.create({
     color: colorPalette.white,
   },
   next:{
-    width: 30,
-    height: 30,
+    width: 20,
+    height: 20,
+    marginLeft: 10,
   },
 });
