@@ -142,7 +142,6 @@ export default function Search ()
         <Text style = {styles.heading}>Wanna cook?</Text>
 
         <Text style = {[styles.accordionTxt, {marginVertical: 15,}]}>Search by:</Text>
-        <Text>{request}</Text>
         
         <View style = {styles.accordion}>
             <View>
