@@ -90,31 +90,43 @@ export default function Search ()
   const navigation = useNavigation();
 
 
-  const navigateToResults = (type, value) => {
+  const navigateToResults = async (type, value) => {
+    let url;
     
     switch (type) {
       case 0:
-        setRequest('www.themealdb.com/api/json/v1/1/search.php?s='+value);
+        url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(value)}`;
         break;
   
       case 1:
-        setRequest('www.themealdb.com/api/json/v1/1/filter.php?i='+value);
+        url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(value)}`;
         break;
-
+  
       case 2:
-        setRequest('www.themealdb.com/api/json/v1/1/filter.php?a='+value);
+        url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${encodeURIComponent(value)}`;
         break;
-    
+  
       case 3:
-        setRequest('www.themealdb.com/api/json/v1/1/filter.php?c='+value);
+        url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(value)}`;
         break;
-
+  
       default:
-        setRequest('www.themealdb.com/api/json/v1/1/random.php');
+        url = 'https://www.themealdb.com/api/json/v1/1/random.php';
         break;
     }
-    navigation.navigate('Results', {request: request});
+  
+    try {
+      let response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      let data = await response.json();
+      navigation.navigate('Results', { data });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
+  
 
   return (
   <SafeAreaView>  

@@ -32,6 +32,7 @@ export default function Results() {
   });
 
   const [prueba, setPrueba] = useState(null);
+  const [req, setReq] = useState('No');
 
   //Object to can obtain the params
   const route = useRoute();
@@ -41,15 +42,14 @@ export default function Results() {
 
       try {
 
-        const {request} = route.params;
-        console.log(request)
+        const {data} = route.params;
 
           // "https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian"
 
-        let response_prueba = await fetch(JSON.stringify(request));
-        let data_prueba = await response_prueba.json();
-        setPrueba(data_prueba);
-
+        // let response_prueba = await fetch(JSON.stringify(request));
+        // let data_prueba = await response_prueba.json();
+        setPrueba(data);
+        // setReq(JSON.stringify(request))
       } catch (error) {
         setPrueba(null);
         console.log(error);
