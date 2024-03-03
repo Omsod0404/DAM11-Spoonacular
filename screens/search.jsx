@@ -49,6 +49,8 @@ export default function Search ()
       } catch (error) {
         setAreas(null);
         setCategories(null);
+        setInputTxt('');
+        setRequest(null);
         setError('Error getting the categories and area');
         console.log(error);
       }
@@ -62,30 +64,36 @@ export default function Search ()
     let states = Array(imActive.length).fill(false)
     states[index] = !imActive[index];
     setImActive(states);
-    setInputTxt(null);
+    setInputTxt('');
+    setRequest(null);
   };
 
   const cleanStr = (str) => {
-    return str.replace(/ /g, '_');
+    if(str!=null){
+      return str.replace(/ /g, '_');
+    }
+    return ''
   };
 
-  const isValidInput = (input) => {
+  const isValidInput = (type) => {
 
-    let str = cleanStr(input)
+    let cleanInputTxt = cleanStr(inputTxt)
 
-    if (validator.isWhitelisted(input, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ')) {
-      setInputTxt(input);
+    if (validator.isWhitelisted(cleanInputTxt, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_')) {
+      setInputTxt(cleanInputTxt);
+      navigateToResults(type, cleanInputTxt);
     } else {
-      Alert.alert('Sorry', 'The text must only contain letters and spaces.');
+      Alert.alert('Sorry!', 'The text must contain only english letters and spaces.');
     }
   };
 
   const navigation = useNavigation();
 
+
   const navigateToResults = (type, value) => {
     
     switch (type) {
-      case 0 && value != null:
+      case 0:
         setRequest('www.themealdb.com/api/json/v1/1/search.php?s='+value);
         break;
   
@@ -121,16 +129,35 @@ export default function Search ()
       <View>
         <Text style = {styles.heading}>Wanna cook?</Text>
 
-        <Text style = {styles.accordionTxt}>Search by:</Text>
-        <View>
-          <Text>Name:</Text>
-          <TextInput
-            multiline = {false}
-            maxLength={40}
-            onChangeText={text => setInputTxt(text)}
-            value={inputTxt}/>
-        </View>
+        <Text style = {[styles.accordionTxt, {marginVertical: 15,}]}>Search by:</Text>
+        <Text>{request}</Text>
         
+        <View style = {styles.accordion}>
+            <View>
+              <TouchableOpacity 
+                style = {{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between',}}
+                onPress={() => display(0)}>
+                <Text style = {styles.accordionTxt}>Food Name</Text>
+                <Image source={require('../assets/icons/angle.png')} style = {[styles.angleAccordion, {transform: [{rotate: !imActive[0] ? '0deg' : '180deg'}],}]}/>
+              </TouchableOpacity>
+            </View>
+            {(areas && imActive[0]) &&
+              <View style = {{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', margin: 10,}}>
+                <TextInput
+                  style = {styles.inputStyle}
+                  multiline = {false}
+                  maxLength={40}
+                  placeholder="Write here"
+                  onChangeText={input => setInputTxt(input)}
+                  value={inputTxt}/>
+                <TouchableOpacity style = {styles.btnInput} 
+                  onPress={() => isValidInput(0)}>
+                  <Text style = {styles.btnInputTxt}>Search</Text>
+                  <Image source={require('../assets/icons/angle.png')} style = {{transform: [{rotate: '-90deg'}], height: 14, width: 14, tintColor: colorPalette.white,}}/>
+                </TouchableOpacity>
+              </View>
+            }
+          </View>
         
           <View style = {styles.accordion}>
             <View>
@@ -150,7 +177,8 @@ export default function Search ()
                   placeholder="Write here"
                   onChangeText={input => setInputTxt(input)}
                   value={inputTxt}/>
-                <TouchableOpacity style = {styles.btnInput}>
+                <TouchableOpacity style = {styles.btnInput}
+                  onPress={() => isValidInput(1)}>
                   <Text style = {styles.btnInputTxt}>Search</Text>
                   <Image source={require('../assets/icons/angle.png')} style = {{transform: [{rotate: '-90deg'}], height: 14, width: 14, tintColor: colorPalette.white,}}/>
                 </TouchableOpacity>
@@ -177,7 +205,9 @@ export default function Search ()
                   persistentScrollbar = {true}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item }) => (
-                    <TouchableOpacity style = {styles.btnAccordion} value = {item.strArea}>
+                    <TouchableOpacity style = {styles.btnAccordion} 
+                      value = {item.strArea}
+                      onPress={() => navigateToResults(2, item.strArea)}>
                       <Text style = {styles.btnAccordionTxt}>{item.strArea}</Text>
                     </TouchableOpacity>
                   )}
@@ -205,7 +235,9 @@ export default function Search ()
                   persistentScrollbar = {true}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item }) => (
-                    <TouchableOpacity style = {styles.btnAccordion} value = {item.strCategory}>
+                    <TouchableOpacity style = {styles.btnAccordion} 
+                      value = {item.strCategory}
+                      onPress={() => navigateToResults(3, item.strCategory)}>
                       <Text style = {styles.btnAccordionTxt}>{item.strCategory}</Text>
                     </TouchableOpacity>
                   )}
@@ -278,7 +310,7 @@ const styles = StyleSheet.create(
     flatListContainer:
     {
       paddingVertical: 10,
-      height: 190,
+      height: 180,
     },
     btnAccordion:
     {

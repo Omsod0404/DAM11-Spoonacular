@@ -33,23 +33,30 @@ export default function Results() {
 
   const [prueba, setPrueba] = useState(null);
 
+  //Object to can obtain the params
+  const route = useRoute();
+
   useEffect(() => {
     const fetchData = async () => {
-      // Define an async function
 
       try {
-        let response_prueba = await fetch(
-          "https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian"
-        );
+
+        const {request} = route.params;
+        console.log(request)
+
+          // "https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian"
+
+        let response_prueba = await fetch(JSON.stringify(request));
         let data_prueba = await response_prueba.json();
         setPrueba(data_prueba);
+
       } catch (error) {
         setPrueba(null);
         console.log(error);
       }
     };
     fetchData();
-  }, []);
+  }, [route.params]);
 
   const navigation = useNavigation();
 
