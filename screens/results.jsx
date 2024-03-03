@@ -31,34 +31,32 @@ export default function Results() {
     "Inter-Medium": require("../assets/fonts/Inter-Medium.ttf"),
   });
 
-  const [prueba, setPrueba] = useState(null);
-  const [req, setReq] = useState('No');
+  //Variable where we store the data from the search screen
+  const [recipesList, setRecipesList] = useState(null);
+  const [searchTitle, setSearchTitle] = useState("");
 
   //Object to can obtain the params
   const route = useRoute();
 
+  //On screen loading, we get the data
   useEffect(() => {
     const fetchData = async () => {
-
       try {
-
-        const {data} = route.params;
-
-          // "https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian"
-
-        // let response_prueba = await fetch(JSON.stringify(request));
-        // let data_prueba = await response_prueba.json();
-        setPrueba(data);
-        // setReq(JSON.stringify(request))
+        const {data, searchTitle} = route.params;
+        setRecipesList(data);
+        setSearchTitle(searchTitle);
       } catch (error) {
-        setPrueba(null);
+        setRecipesList(null);
+        setSearchTitle("");
         console.log(error);
       }
     };
     fetchData();
   }, [route.params]);
 
+  //Object to can navigate through screens
   const navigation = useNavigation();
+
   //Navigate to recipe passing the id of the meal
   const navigateToRecipe = (idMeal) => {
     navigation.navigate('Recipe', {id: idMeal});
@@ -69,13 +67,14 @@ export default function Results() {
       <View style = {ResultStyles.bar}>
       <Image source={require('../assets/icons/logo.png')} style={ResultStyles.logo}/>
       <Text style={ResultStyles.title}>Deli-Meals</Text>
-    </View>
+      </View>
+      <Text style={ResultStyles.searchTitle}>{searchTitle}</Text>
       <View style={ResultStyles.recipes}>
-      {prueba && (
+      {recipesList && (
         <>
           <FlatList
             style = {ResultStyles.recipesList}
-            data={prueba.meals}
+            data={recipesList.meals}
             keyExtractor={(item) => item.idMeal}
             renderItem={({ item }) => (
               <>
@@ -105,24 +104,25 @@ const ResultStyles = StyleSheet.create({
   {
     backgroundColor: colorPalette.green,
     width: '100%',
-    height: '10%',
-    padding: 20,
+    height: 80,
+    display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   title:
   {
     fontFamily: 'Inter-ExtraBold',
     color: colorPalette.whitelight,
-    fontSize: 16,
+    fontSize: 24,
   },
   logo:
   {
-      height: 40,
-      width: 40,
-      marginRight: 10,
+    height: 50,
+    width: 50,
+    marginRight: 10,
   },
   container: {
     backgroundColor: colorPalette.whitelight,
@@ -131,11 +131,14 @@ const ResultStyles = StyleSheet.create({
     flexDirection: 'column',
     paddingBottom: 5,
   },
-  filters: {
-    backgroundColor: colorPalette.green,
-    height: 200, 
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+  searchTitle: {
+    fontSize: 24,
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontFamily: 'Inter-ExtraBold',
+    marginVertical: 5,
+    marginHorizontal: 10,
+    color: colorPalette.green,
   },
   recipes: {
     flex: 1,
@@ -169,7 +172,7 @@ const ResultStyles = StyleSheet.create({
   },
   recipeText:{
     width: '50%',
-    height: '90%',
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -193,13 +196,13 @@ const ResultStyles = StyleSheet.create({
   },
   buttonRecipeText:{
     fontFamily: 'Inter-Medium',
-    fontSize: 12,
+    fontSize: 14,
     color: colorPalette.white,
     marginLeft: 10,
   },
   next:{
-    width: 12,
-    height: 12,
+    width: 14,
+    height: 14,
     marginHorizontal: 10,
     tintColor: colorPalette.white,
     transform: [{
