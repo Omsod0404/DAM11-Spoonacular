@@ -122,6 +122,7 @@ const ResultStyles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
+    paddingBottom: 5,
   },
   filters: {
     backgroundColor: colorPalette.green,
@@ -141,12 +142,12 @@ const ResultStyles = StyleSheet.create({
   },
   recipeContainer:{
     backgroundColor: colorPalette.white,
-    height: 120,
+    height: 150,
     width: '95%',
     alignSelf: 'center',
     borderRadius: 10,
-    marginTop: 5,
-    marginBottom: 5,
+    marginVertical: 5,
+    paddingVertical: 5,
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
