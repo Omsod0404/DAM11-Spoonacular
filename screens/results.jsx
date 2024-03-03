@@ -59,7 +59,7 @@ export default function Results() {
   }, [route.params]);
 
   const navigation = useNavigation();
-
+  //Navigate to recipe passing the id of the meal
   const navigateToRecipe = (idMeal) => {
     navigation.navigate('Recipe', {id: idMeal});
   };
