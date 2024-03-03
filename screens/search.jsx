@@ -121,9 +121,15 @@ export default function Search ()
         throw new Error('Failed to fetch data');
       }
       let data = await response.json();
-      navigation.navigate('Results', { data });
+      
+      if (data.meals != null){
+        navigation.navigate('Results', { data });
+      } else {
+        Alert.alert('Sorry!', 'We coudn\'t find something 😵‍💫');
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
+      Alert.alert('Not your fault!', 'There was an error getting the data 😓');
     }
   };
   
