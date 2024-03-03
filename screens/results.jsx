@@ -188,7 +188,7 @@ const ResultStyles = StyleSheet.create({
     fontFamily: 'Inter-Medium',
     fontSize: 12,
     color: colorPalette.white,
-    marginLeft: 15,
+    marginLeft: 10,
   },
   next:{
     width: 12,

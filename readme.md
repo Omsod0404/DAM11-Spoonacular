@@ -29,6 +29,14 @@ Also
 npm install @react-navigation/native-stack
 yarn add @react-navigation/native-stack
 ```
+#### Validator
+
+```
+npm install validator
+yarn add validator
+```
+
+
 
 #### Fonts
 
