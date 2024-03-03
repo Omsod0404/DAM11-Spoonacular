@@ -26,7 +26,7 @@ export default function Recipe() {
   //Obtain the params we receive from the previous screen
   const { id } = route.params;
 
-  const [foodID, setFoodID] = useState(JSON.stringify(id));
+  const [foodID, setFoodID] = useState(id);
 
   //Fonts used on this screen
   const [fontsLoaded] = useFonts({
