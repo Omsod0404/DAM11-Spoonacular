@@ -21,7 +21,7 @@ export default function App() {
     <NavigationContainer>
       {/* Status bar of the app */}
       <StatusBar barStyle={'light-content'} backgroundColor={colorPalette.green}/>
-      <Stack.Navigator initialRouteName='Results'>
+      <Stack.Navigator initialRouteName='Search'>
         <Stack.Screen name='Welcome' component={Welcome} options={{headerShown: false}}/>
         <Stack.Screen name='Search' component={Search} options={{headerShown: false}}/>
         <Stack.Screen name='Recipe' component={Recipe} options={{headerShown: false}}/>

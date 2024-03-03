@@ -1,26 +1,33 @@
 import React, {useState, useEffect} from "react";
-import { Text, View, FlatList, Image, StyleSheet, TextInput, TouchableOpacity} from "react-native";
+import { Text, View, FlatList, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView} from "react-native";
 import { useFonts } from 'expo-font';
+import { useNavigation } from "@react-navigation/native";
 
 const colorPalette = {
-  green : 'rgba(0, 66, 37, 1)', /*Hex  #004225*/ 
-  whitelight: 'rgba(245, 245, 220, 1)', /*Hex  #F5F5DC*/
-  yellow: 'rgba(255, 176, 0, 1)', /*Hex  #FFB000*/
-  pinklight: 'rgba(255, 207, 157, 1)', /*Hex  #FFCF9D*/
+  green: "rgba(0, 66, 37, 1)" /*Hex  #004225*/,
+  whitelight: "rgba(245, 245, 220, 1)" /*Hex  #F5F5DC*/,
+  yellow: "rgba(255, 176, 0, 1)" /*Hex  #FFB000*/,
+  pinklight: "rgba(255, 207, 157, 1)" /*Hex  #FFCF9D*/,
+  white: "rgba(255, 255, 255, 1)" /*Hex  #FFFFFF*/,
 };
 
 export default function Search ()
 {
 
-  const [fontsBold] = useFonts({
-    'Inter-ExtraBold': require('../assets/fonts/Inter-ExtraBold.ttf')
+  const [fontsLoaded] = useFonts({
+    "Inter-ExtraBold": require("../assets/fonts/Inter-ExtraBold.ttf"),
+    "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
+    "Inter-Bold": require("../assets/fonts/Inter-Bold.ttf"),
+    "Inter-SemiBold": require("../assets/fonts/Inter-SemiBold.ttf"),
+    "Inter-Light": require("../assets/fonts/Inter-Light.ttf"),
+    "Inter-Medium": require("../assets/fonts/Inter-Medium.ttf"),
   });
 
   const [areas, setAreas] = useState(null);
   const [categories, setCategories] = useState(null);
   const [imActive, setImActive] = useState([false, false, false]);
   const [inputTxt, setInputTxt] = useState('Search');
-  const [recipes, setRecipes] = useState(null);
+  const [request, setRequest] = useState(null);
 
   const [error, setError] = useState(null); 
 
@@ -56,6 +63,12 @@ export default function Search ()
     setImActive(states);
   };
 
+  const navigation = useNavigation();
+
+  const navigateToResults = () => {
+    navigation.navigate('Results', {request: request});
+  };
+
   return (
   <SafeAreaView>  
 
@@ -67,7 +80,7 @@ export default function Search ()
     <View style = {styles.mainContainer}>
 
       <View>
-        <Text style = {styles.heading}>What you wanna cook?</Text>
+        <Text style = {styles.heading}>Wanna cook?</Text>
 
         <Text style = {styles.accordionTxt}>Search by:</Text>
         <View>
@@ -146,10 +159,8 @@ export default function Search ()
       </View>
 
       <View>
-        <View style = {{width: '100%', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: '60%'}}>
-            <Image style={{height: 100, width: 100, alignSelf: 'center'}} source={require('../assets/icons/Baguette.gif')}/>
-            <Image style={{height: 100, width: 100, alignSelf: 'center'}} source={require('../assets/icons/Bread.gif')}/>
-            <Image style={{height: 100, width: 100, alignSelf: 'center'}} source={require('../assets/icons/Generique.gif')}/>
+        <View style = {{width: '100%', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-end', marginTop: '60%'}}>
+            <Image style={{height: 120, width: 120, alignSelf: 'center'}} source={require('../assets/icons/Generique.gif')}/>
         </View>
       </View>
 
@@ -183,7 +194,7 @@ const styles = StyleSheet.create(
     {
       fontFamily: 'Inter-ExtraBold',
       color: colorPalette.whitelight,
-      fontSize: 30,
+      fontSize: 16,
     },
     logo:
     {
@@ -193,18 +204,17 @@ const styles = StyleSheet.create(
     },
     accordion:
     {
-      borderWidth: 2,
       paddingHorizontal: 10,
       paddingVertical: 20,
       borderRadius: 10,
       marginVertical: 10,
-      borderColor: colorPalette.green,
+      backgroundColor: colorPalette.white,
     },
     accordionTxt:
     {
       fontSize: 14,
-      fontWeight: 'bold',
-      color: colorPalette.green,
+      fontFamily: 'Inter-Bold',
+      color: 'black',
     },
     flatListContainer:
     {
@@ -222,9 +232,9 @@ const styles = StyleSheet.create(
     },
     btnAccordionTxt:
     {
-      color: colorPalette.whitelight,
+      color: colorPalette.white,
       fontSize: 14,
-      fontWeight: 'bold',
+      fontFamily: 'Inter-Medium',
     },
     angleAccordion:
     {
@@ -235,8 +245,8 @@ const styles = StyleSheet.create(
     },
     heading:
     {
-      fontSize: 20,
-      fontWeight: 'bold',
+      fontSize: 32,
+      fontFamily: 'Inter-Bold',
       color: colorPalette.green,
     },
   }

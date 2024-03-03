@@ -78,7 +78,7 @@ export default function Results() {
                     <Text style = {ResultStyles.recipeTitle}>{item.strMeal}</Text>
                     <TouchableOpacity style={ResultStyles.buttonRecipe} onPress={() => (navigateToRecipe(item.idMeal))}>
                       <Text style={ResultStyles.buttonRecipeText}>See full recipe</Text>
-                      <Image source={require('../assets/icons/next.png')} style={ResultStyles.next}/>
+                      <Image source={require('../assets/icons/angle.png')} style={ResultStyles.next}/>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -109,7 +109,7 @@ const ResultStyles = StyleSheet.create({
   {
     fontFamily: 'Inter-ExtraBold',
     color: colorPalette.whitelight,
-    fontSize: 30,
+    fontSize: 16,
   },
   logo:
   {
@@ -170,13 +170,13 @@ const ResultStyles = StyleSheet.create({
   },
   recipeTitle:{
     fontFamily: 'Inter-Bold',
-    fontSize: 20,
+    fontSize: 14,
     textAlign: 'center',
   },
   buttonRecipe:{
     backgroundColor: colorPalette.yellow,
-    width: '80%',
-    height: 35,
+    width: '90%',
+    height: 45,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -185,12 +185,17 @@ const ResultStyles = StyleSheet.create({
   },
   buttonRecipeText:{
     fontFamily: 'Inter-Medium',
-    fontSize: 15,
+    fontSize: 12,
     color: colorPalette.white,
+    marginLeft: 15,
   },
   next:{
-    width: 20,
-    height: 20,
-    marginLeft: 10,
+    width: 12,
+    height: 12,
+    marginHorizontal: 10,
+    tintColor: colorPalette.white,
+    transform: [{
+      rotate: '-90deg',
+    }],
   },
 });

@@ -15,7 +15,7 @@ const WelcomeScreen = () => {
     const navigation = useNavigation();
     //Set a timeout to execute navigation to serach when the timer has reache 0 
     useEffect(() => {
-        const timeout = setTimeout(navigateToSearch, 2000);
+        const timeout = setTimeout(navigateToSearch, 1500);
         return () => clearTimeout(timeout)//To execute the timer
     }, []);
     //Function to navigate to search
@@ -47,7 +47,7 @@ const welcomeScreenStyles = StyleSheet.create({
     title:{
         fontFamily: 'Inter-ExtraBold',
         color: colorPalette.whitelight,
-        fontSize: 40,
+        fontSize: 36,
     },
     logo:{
         width: 250,
