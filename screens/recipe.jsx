@@ -113,14 +113,21 @@ export default function Recipe() {
         </View>
         </View>
         <Text style={RecipeStyles.Instructions}>{fullRecipe.strInstructions}</Text>
-        <TouchableOpacity style={RecipeStyles.buttonRecipe} onPress={() => Linking.openURL(fullRecipe.strYoutube)}>
-          <Text style={RecipeStyles.Instructions}>Watch on Youtube</Text>
-        </TouchableOpacity>
+        <TouchableOpacity style={RecipeStyles.buttonRecipe} onPress={() => {
+          try {
+            if (fullRecipe.strYoutube) {
+              Linking.openURL(fullRecipe.strYoutube);
+            } else {
+              Alert.alert('Not your fault!');
+            }
+          } catch (error) {
+            console.error('Error al abrir la URL:', error);
+          }}}>
+            <Text style={RecipeStyles.Instructions}>Watch on Youtube</Text>
+            </TouchableOpacity>
         </View>        
         </View>
         </ScrollView>
-
-
 
         </>
       )}
