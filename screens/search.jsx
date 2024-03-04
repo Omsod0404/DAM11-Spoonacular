@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Text, View, FlatList, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Alert} from "react-native";
+import { Text, View, FlatList, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Alert, ScrollView} from "react-native";
 import { useFonts } from 'expo-font';
 import { useNavigation } from "@react-navigation/native";
 import validator from "validator";
@@ -153,8 +153,8 @@ export default function Search ()
         <Text style = {styles.heading}>Wanna cook?</Text>
 
         <Text style = {[styles.accordionTxt, {marginVertical: 15,}]}>Search by:</Text>
-        
         <View style = {styles.accordion}>
+        
             <View>
               <TouchableOpacity 
                 style = {{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between',}}
