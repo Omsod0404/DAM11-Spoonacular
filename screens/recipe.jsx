@@ -41,8 +41,8 @@ export default function Recipe() {
                 const ingredient = data_FullRecipe.meals[0][`strIngredient${i}`];
                 const amount = data_FullRecipe.meals[0][`strMeasure${i}`];
                 if (ingredient) {
-                    mealIngredients.push({id: i, ingredient: ingredient });
-                    mealAmounts.push({id: i, amount: amount });
+                    mealIngredients.push({ingredient: ingredient });
+                    mealAmounts.push({amount: amount });
                 }
             }
             setAmounts(mealAmounts);
@@ -71,64 +71,51 @@ export default function Recipe() {
   return (
     <SafeAreaView style = {RecipeStyles.container}>
       <View style = {RecipeStyles.bar}>
-      <Image source={require('../assets/icons/logo.png')} style={RecipeStyles.logo}/>
-      <Text style={RecipeStyles.title}>Deli-Meals</Text>
+        <Image source={require('../assets/icons/logo.png')} style={RecipeStyles.logo}/>
+        <Text style={RecipeStyles.title}>Deli-Meals</Text>
       </View>
+      
       <View style={RecipeStyles.recipes}>
-
       {fullRecipe && (
         <>
-        <ScrollView style={{ flex: 1 }}
-  contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={RecipeStyles.containerRedo}>
-            
-          <View style={RecipeStyles.searchTitle}>
-            <Text style={RecipeStyles.searchTitle} >{fullRecipe.strMeal}</Text>
-            <Text style={RecipeStyles.searchSubTitle}>{fullRecipe.strCategory}</Text>
-            <Text>{fullRecipe.dateModified}</Text>
-            
-          </View>
-        
-        <View style={RecipeStyles.containerDescrip}>
-        <Image source={{uri: fullRecipe.strMealThumb}} style={RecipeStyles.mealImage} />
-        <View style={RecipeStyles.containerDescrip}>
-        <View style={{display: 'flex', flexDirection:'row', padding:20}}>
-        <FlatList
-        data={ingredients}
-        keyExtractor={(item) => item.id}
-        renderItem={({item}) => (
-          <Text style={RecipeStyles.textIngredients}>{item.ingredient}</Text>
-        )}
-        >
+          <ScrollView style={RecipeStyles.recipeScroll} contentContainerStyle={{ flexGrow: 1 }}>
 
-        </FlatList>
-        <FlatList
-        data={amounts}
-        keyExtractor={(item) => item.id}
-        renderItem={({item}) => (
-          <Text style={RecipeStyles.textAmount}>{item.amount}</Text>
-        )}
-        >
-        </FlatList>
-        </View>
-        </View>
-        <Text style={RecipeStyles.Instructions}>{fullRecipe.strInstructions}</Text>
-        <TouchableOpacity style={RecipeStyles.buttonRecipe} onPress={() => {
-          try {
-            if (fullRecipe.strYoutube) {
-              Linking.openURL(fullRecipe.strYoutube);
-            } else {
-              Alert.alert('Oh no! They have taken away the recipe video 😱');
+            <Text style={RecipeStyles.mealTitle} >{fullRecipe.strMeal}</Text>
+            <Text style={RecipeStyles.mealCategory}>{fullRecipe.strArea} - {fullRecipe.strCategory}</Text>
+            
+            <Image source={{uri: fullRecipe.strMealThumb}} style={RecipeStyles.mealImage} />
+            
+            <View style={{display: 'flex', flexDirection:'row', padding:20, justifyContent:'space-between'}}>
+              <Text style={RecipeStyles.searchSubTitle2}>Ingredients</Text>
+              <Text style={RecipeStyles.searchSubTitle2}>Measure</Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'column', paddingHorizontal: 20 }}>
+            {
+              ingredients.map((ingredient, index) => (
+                <View key={index} style={{ marginRight: 20, display: "flex", flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                  <Text style={RecipeStyles.textIngredients}>{ingredient.ingredient}</Text>
+                  <Text style={RecipeStyles.textAmount}>{amounts[index].amount}</Text>
+                </View>
+              ))
             }
-          } catch (error) {
-            console.error('Error al abrir la URL:', error);
-          }}}>
-            <Text style={RecipeStyles.Instructions}>Watch on Youtube</Text>
-            </TouchableOpacity>
-        </View>        
-        </View>
-        </ScrollView>
+            </View>
 
+            <Text style={RecipeStyles.searchSubTitle3}>How to make it?</Text>
+            <Text style={RecipeStyles.Instructions}>{fullRecipe.strInstructions}</Text>
+
+            <TouchableOpacity style={RecipeStyles.buttonRecipe} onPress={() => {
+              try {
+                if (fullRecipe.strYoutube) {
+                  Linking.openURL(fullRecipe.strYoutube);
+                } else {
+                  Alert.alert('YouTube video not aviable currently, try later');
+                }
+              } catch (error) {
+                console.error('Error al abrir la URL:', error);
+              }}}>
+                <Text style={RecipeStyles.textInstructionsB}>Watch on Youtube</Text>
+            </TouchableOpacity>       
+          </ScrollView>
         </>
       )}
       {error && (
@@ -145,37 +132,55 @@ const RecipeStyles = StyleSheet.create({
   {
     backgroundColor: colorPalette.green,
     width: '100%',
-    height: '10%',
-    padding: 20,
+    height: 80,
+    display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   title:
   {
     fontFamily: 'Inter-ExtraBold',
     color: colorPalette.whitelight,
-    fontSize: 16,
+    fontSize: 24,
   },
   logo:
   {
-      height: 40,
-      width: 40,
-      marginRight: 10,
+    height: 50,
+    width: 50,
+    marginRight: 10,
   },
-  searchTitle: {
+  recipeScroll: {
+    alignSelf: 'center',
+    width: '90%',
+    backgroundColor: colorPalette.white,
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius:20,
+  },
+  mealTitle: {
     fontSize: 35,
     alignSelf: 'center',
     textAlign: 'center',
     fontFamily: 'Inter-ExtraBold',
-    marginVertical: 5,
-    marginHorizontal: 10,
     color: colorPalette.green,
-    
+    width: '90%',
+    margin: 20
+  },
+  mealCategory: {
+    fontSize: 20,
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontFamily: 'Inter-Bold',
+    color: colorPalette.green,
+    width: '90%',
+    top: -20,
   },
   searchSubTitle: {
-    fontSize: 12,
+    fontSize: 14,
     alignSelf: 'center',
     textAlign: 'center',
     fontFamily: 'Inter-ExtraBold',
@@ -189,7 +194,7 @@ const RecipeStyles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    paddingBottom: 5,
+    borderRadius:10,
   },
   textIngredients:{
     fontFamily: 'Inter-Medium',
@@ -199,7 +204,19 @@ const RecipeStyles = StyleSheet.create({
     fontFamily: 'Inter-Medium',
     textAlign: 'right'
   },
-
+  searchSubTitle2: {
+    fontSize: 18,
+    fontFamily: 'Inter-ExtraBold',
+    color: colorPalette.green,
+  },
+  searchSubTitle3: {
+    fontSize: 18,
+    fontFamily: 'Inter-ExtraBold',
+    textAlign: 'center',
+    color: colorPalette.green,
+    width: '100%',
+    marginVertical: 20,
+  },
 
   containerRedo: {
     backgroundColor: colorPalette.white,
@@ -220,12 +237,13 @@ const RecipeStyles = StyleSheet.create({
     paddingBottom: 5,
     top:-15,
     width:310,
-    
+    borderRadius:10,
   },
 
   recipes: {
     flex: 1,
     display: 'flex',
+    paddingVertical: 20,
   },
   recipeContainer:{
     top:150,
@@ -244,6 +262,14 @@ const RecipeStyles = StyleSheet.create({
   Instructions:{
     textAlign:'justify',
     fontFamily: 'Inter-Medium',
+    width: '90%',
+    alignSelf: 'center',
+  },
+  textInstructionsB:{
+    textAlign:'center',
+    fontFamily: 'Inter-Medium',
+    width: '90%',
+    alignSelf: 'center',
   },
   recipeText:{
     width: '50%',
@@ -261,14 +287,13 @@ const RecipeStyles = StyleSheet.create({
   },
   mealImage:{
     width: '100%',
-    height: 80,
-    borderRadius: 10,
-    top:-20,
+    height: 220,
+    resizeMode: 'cover',
   },
   buttonRecipe:{
     alignSelf: 'center',
     backgroundColor: colorPalette.yellow,
-    width: '50%',
+    width: '80%',
     height: 40,
     borderRadius: 10,
     margin:20,
