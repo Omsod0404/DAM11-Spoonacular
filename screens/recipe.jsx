@@ -89,7 +89,6 @@ export default function Recipe() {
               <Text style={RecipeStyles.searchSubTitle2}>Ingredients</Text>
               <Text style={RecipeStyles.searchSubTitle2}>Measure</Text>
             </View>
-
             <View style={{ display: 'flex', flexDirection: 'column', paddingHorizontal: 20 }}>
             {
               ingredients.map((ingredient, index) => (
