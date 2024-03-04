@@ -118,7 +118,7 @@ export default function Recipe() {
             if (fullRecipe.strYoutube) {
               Linking.openURL(fullRecipe.strYoutube);
             } else {
-              Alert.alert('Not your fault!');
+              Alert.alert('Oh no! They have taken away the recipe video 😱');
             }
           } catch (error) {
             console.error('Error al abrir la URL:', error);
