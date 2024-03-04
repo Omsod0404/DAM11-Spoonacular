@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Text, View, FlatList, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Alert} from "react-native";
+import { Text, View, FlatList, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Alert, ScrollView} from "react-native";
 import { useFonts } from 'expo-font';
 import { useNavigation } from "@react-navigation/native";
 import validator from "validator";
@@ -92,22 +92,27 @@ export default function Search ()
 
   const navigateToResults = async (type, value) => {
     let url;
+    let searchTitle;
     
     switch (type) {
       case 0:
         url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(value)}`;
+        searchTitle = "Showing results for: " + value;
         break;
   
       case 1:
         url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(value)}`;
+        searchTitle = "Showing results for: " + value;
         break;
   
       case 2:
         url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${encodeURIComponent(value)}`;
+        searchTitle = "Showing results for area: " + value;
         break;
   
       case 3:
         url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(value)}`;
+        searchTitle = "Showing results for category: " + value;
         break;
   
       default:
@@ -123,7 +128,7 @@ export default function Search ()
       let data = await response.json();
       
       if (data.meals != null){
-        navigation.navigate('Results', { data });
+        navigation.navigate('Results', { data, searchTitle: searchTitle });
       } else {
         Alert.alert('Sorry!', 'We coudn\'t find something 😵‍💫');
       }
@@ -148,8 +153,8 @@ export default function Search ()
         <Text style = {styles.heading}>Wanna cook?</Text>
 
         <Text style = {[styles.accordionTxt, {marginVertical: 15,}]}>Search by:</Text>
-        
         <View style = {styles.accordion}>
+        
             <View>
               <TouchableOpacity 
                 style = {{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between',}}
@@ -290,23 +295,24 @@ const styles = StyleSheet.create(
     {
       backgroundColor: colorPalette.green,
       width: '100%',
-      height: '10%',
-      padding: 20,
+      height: 80,
+      display: 'flex',
       flexWrap: 'wrap',
       flexDirection: 'row',
-      alignItems: 'center',
+      alignContent: 'center',
       justifyContent: 'center',
+      alignItems: 'center',
     },
     title:
     {
       fontFamily: 'Inter-ExtraBold',
       color: colorPalette.whitelight,
-      fontSize: 16,
+      fontSize: 24,
     },
     logo:
     {
-        height: 40,
-        width: 40,
+        height: 50,
+        width: 50,
         marginRight: 10,
     },
     accordion:
@@ -332,9 +338,9 @@ const styles = StyleSheet.create(
     btnAccordion:
     {
       backgroundColor: colorPalette.yellow,
-      height: 55,
+      height: 45,
       margin: 5,
-      paddingVertical: 15,
+      paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 10,
     },
@@ -357,9 +363,11 @@ const styles = StyleSheet.create(
       fontSize: 36,
       fontFamily: 'Inter-Bold',
       color: colorPalette.green,
+      alignSelf: 'center',
     },
     btnInput:
     {
+      display: 'flex',
       backgroundColor: colorPalette.yellow,
       color: colorPalette.white,
       fontSize: 14,
