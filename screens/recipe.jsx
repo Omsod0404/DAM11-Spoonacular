@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {Text, View, FlatList, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Alert, ScrollView,} from "react-native";
 import { useFonts } from "expo-font";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { Linking } from 'react-native';
 
 const colorPalette = {
   green: "rgba(0, 66, 37, 1)" /*Hex  #004225*/,
@@ -111,8 +112,8 @@ export default function Recipe() {
         </FlatList>
         </View>
         </View>
-          <Text style={RecipeStyles.Instructions}>{fullRecipe.strInstructions}</Text>
-        <TouchableOpacity  style={RecipeStyles.buttonRecipe} onPress={() => (useNavigation(fullRecipe.strYoutube))}>
+        <Text style={RecipeStyles.Instructions}>{fullRecipe.strInstructions}</Text>
+        <TouchableOpacity style={RecipeStyles.buttonRecipe} onPress={() => Linking.openURL(fullRecipe.strYoutube)}>
           <Text style={RecipeStyles.Instructions}>Watch on Youtube</Text>
         </TouchableOpacity>
         </View>        
